@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+input, button, textarea {
+  font-family: inherit;
+}
+
+body {
+  font-family: "Audiowide", sans-serif;
+  background-color: black;
+  background-image: url('/assets/images/christian-boragine-4FGm3jtvUnI-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+}

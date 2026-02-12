@@ -1,0 +1,108 @@
+<!-- SVG Filters for Fluid Chrome Effect -->
+<svg class="svg-filters" width="0" height="0">
+  <defs>
+    <!-- Prism Blue Chrome Filter - Edge glow only -->
+    <filter id="chrome-blue" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
+      <feSpecularLighting in="blur" surfaceScale="2" specularConstant="0.6" specularExponent="60" lighting-color="#ffffff" result="light">
+        <fePointLight x="80" y="-20" z="150" />
+      </feSpecularLighting>
+      <feComposite in="light" in2="SourceAlpha" operator="in" result="light-clipped" />
+      <feComponentTransfer in="light-clipped" result="light-dimmed">
+        <feFuncA type="linear" slope="0.4" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="SourceGraphic" />
+        <feMergeNode in="light-dimmed" />
+      </feMerge>
+    </filter>
+
+    <!-- Steel Reflection Chrome Filter - Edge glow only -->
+    <filter id="chrome-steel" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur" />
+      <feSpecularLighting in="blur" surfaceScale="2" specularConstant="0.7" specularExponent="50" lighting-color="#ffffff" result="light">
+        <fePointLight x="60" y="-15" z="120" />
+      </feSpecularLighting>
+      <feComposite in="light" in2="SourceAlpha" operator="in" result="light-clipped" />
+      <feComponentTransfer in="light-clipped" result="light-dimmed">
+        <feFuncA type="linear" slope="0.35" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="SourceGraphic" />
+        <feMergeNode in="light-dimmed" />
+      </feMerge>
+    </filter>
+
+    <!-- Electric Crimson Chrome Filter - Edge glow only -->
+    <filter id="chrome-crimson" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
+      <feSpecularLighting in="blur" surfaceScale="2" specularConstant="0.5" specularExponent="65" lighting-color="#ffffff" result="light">
+        <fePointLight x="70" y="-25" z="140" />
+      </feSpecularLighting>
+      <feComposite in="light" in2="SourceAlpha" operator="in" result="light-clipped" />
+      <feComponentTransfer in="light-clipped" result="light-dimmed">
+        <feFuncA type="linear" slope="0.4" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="SourceGraphic" />
+        <feMergeNode in="light-dimmed" />
+      </feMerge>
+    </filter>
+  </defs>
+</svg>
+
+<div class="todo-container">
+  <h1>Todo List</h1>
+
+  <div class="add-todo">
+    <input
+      type="text"
+      [(ngModel)]="newTodoTitle"
+      placeholder="What needs to be done?"
+      (keyup.enter)="addTodo()"
+    />
+    <button (click)="addTodo()">Add</button>
+  </div>
+
+  <ul class="todo-list">
+    <li *ngFor="let todo of todos" [class.completed]="todo.completed">
+      <div class="todo-item" *ngIf="editingTodo?.id !== todo.id">
+        <input
+          type="checkbox"
+          [checked]="todo.completed"
+          (change)="toggleComplete(todo)"
+        />
+        <span class="todo-title" (dblclick)="startEdit(todo)">{{ todo.title }}</span>
+        <div class="todo-actions">
+          <button class="edit-btn" (click)="startEdit(todo)">Edit</button>
+          <button class="delete-btn" (click)="deleteTodo(todo.id!)">Delete</button>
+        </div>
+      </div>
+
+      <div class="edit-form" *ngIf="editingTodo && editingTodo.id === todo.id">
+        <input
+          type="text"
+          [(ngModel)]="editingTodo!.title"
+          (keyup.enter)="saveEdit()"
+          (keyup.escape)="cancelEdit()"
+        />
+        <button class="save-btn" (click)="saveEdit()">Save</button>
+        <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </li>
+  </ul>
+
+  <div class="todo-stats" *ngIf="todos.length > 0">
+    <span class="stat-total">{{ todos.length }} total</span>
+    <span class="stat-completed">{{ completedCount }} completed</span>
+    <span class="stat-remaining">{{ remainingCount }} remaining</span>
+  </div>
+
+  <div class="empty-state" *ngIf="todos.length === 0">
+    <p>No todos yet. Add one above!</p>
+  </div>
+</div>
+
+<footer class="photo-credit">
+  Photo by <a href="https://unsplash.com/@aimha?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Christian Boragine</a> on <a href="https://unsplash.com/photos/abstract-metallic-rings-with-glowing-orb-inside-4FGm3jtvUnI?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+</footer>

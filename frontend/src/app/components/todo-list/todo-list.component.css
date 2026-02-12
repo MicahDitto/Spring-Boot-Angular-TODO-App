@@ -1,0 +1,408 @@
+/* Color Palette:
+   Deep Obsidian: #050505
+   Steel Reflection: #A8B2BD
+   Prism Blue: #2B59C3
+   Electric Crimson: #9E1B32
+   Pure Flare: #FFFFFF
+*/
+
+/* Hide the SVG filter definitions */
+.svg-filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.todo-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(168, 178, 189, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(168, 178, 189, 0.25);
+  box-shadow:
+    0 8px 32px rgba(5, 5, 5, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1),
+    0 0 40px rgba(43, 89, 195, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 30px;
+  text-shadow: 0 0 20px rgba(43, 89, 195, 0.6);
+}
+
+.add-todo {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.add-todo input {
+  flex: 1;
+  padding: 12px 15px;
+  font-size: 16px;
+  background: rgba(5, 5, 5, 0.4);
+  border: 1px solid rgba(168, 178, 189, 0.3);
+  border-radius: 10px;
+  outline: none;
+  color: #fff;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.add-todo input::placeholder {
+  color: rgba(168, 178, 189, 0.6);
+}
+
+.add-todo input:focus {
+  border-color: rgba(43, 89, 195, 0.7);
+  box-shadow: 0 0 15px rgba(43, 89, 195, 0.4);
+}
+
+/* Prism Blue chrome button - Add */
+.add-todo button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(135deg,
+    #4a7ae8 0%,
+    #2B59C3 25%,
+    #1e4299 50%,
+    #2B59C3 75%,
+    #4a7ae8 100%);
+  background-size: 200% 200%;
+  color: #fff;
+  box-shadow:
+    0 2px 4px rgba(5, 5, 5, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 0 15px rgba(43, 89, 195, 0.4);
+  transition: all 0.3s ease;
+  text-shadow: 0 1px 2px rgba(5, 5, 5, 0.5);
+  filter: url(#chrome-blue);
+  animation: fluidShine 3s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.add-todo button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent);
+  animation: shimmer 2s infinite;
+}
+
+.add-todo button:hover {
+  background-position: 100% 100%;
+  box-shadow:
+    0 4px 8px rgba(5, 5, 5, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(43, 89, 195, 0.6);
+  transform: translateY(-2px);
+}
+
+.todo-list {
+  list-style: none;
+}
+
+.todo-list li {
+  padding: 15px;
+  border-bottom: 1px solid rgba(168, 178, 189, 0.15);
+}
+
+.todo-list li:last-child {
+  border-bottom: none;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.todo-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #2B59C3;
+}
+
+.todo-title {
+  flex: 1;
+  font-size: 16px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.completed .todo-title {
+  text-decoration: line-through;
+  color: rgba(168, 178, 189, 0.5);
+}
+
+.todo-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.todo-actions button,
+.edit-form button {
+  padding: 6px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.todo-actions button::before,
+.edit-form button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent);
+  animation: shimmer 2.5s infinite;
+}
+
+/* Steel Reflection chrome button - Edit */
+.edit-btn {
+  background: linear-gradient(135deg,
+    #e8eef5 0%,
+    #A8B2BD 20%,
+    #8a9299 40%,
+    #A8B2BD 60%,
+    #d4dbe3 80%,
+    #A8B2BD 100%);
+  background-size: 200% 200%;
+  color: #050505;
+  box-shadow:
+    0 2px 4px rgba(5, 5, 5, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  filter: url(#chrome-steel);
+  animation: fluidShine 4s ease-in-out infinite;
+}
+
+.edit-btn:hover {
+  background-position: 100% 100%;
+  box-shadow:
+    0 4px 8px rgba(5, 5, 5, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Electric Crimson chrome button - Delete */
+.delete-btn {
+  background: linear-gradient(135deg,
+    #d43a57 0%,
+    #9E1B32 25%,
+    #7a1526 50%,
+    #9E1B32 75%,
+    #c42a47 100%);
+  background-size: 200% 200%;
+  color: white;
+  box-shadow:
+    0 2px 4px rgba(5, 5, 5, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 0 10px rgba(158, 27, 50, 0.3);
+  text-shadow: 0 1px 2px rgba(5, 5, 5, 0.5);
+  filter: url(#chrome-crimson);
+  animation: fluidShine 3.5s ease-in-out infinite reverse;
+}
+
+.delete-btn:hover {
+  background-position: 100% 100%;
+  box-shadow:
+    0 4px 8px rgba(5, 5, 5, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 0 25px rgba(158, 27, 50, 0.5);
+  transform: translateY(-2px);
+}
+
+.edit-form {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-form input {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 16px;
+  background: rgba(5, 5, 5, 0.4);
+  border: 1px solid rgba(43, 89, 195, 0.5);
+  border-radius: 8px;
+  outline: none;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(43, 89, 195, 0.2);
+}
+
+/* Prism Blue chrome button - Save */
+.save-btn {
+  background: linear-gradient(135deg,
+    #4a7ae8 0%,
+    #2B59C3 25%,
+    #1e4299 50%,
+    #2B59C3 75%,
+    #4a7ae8 100%);
+  background-size: 200% 200%;
+  color: white;
+  box-shadow:
+    0 2px 4px rgba(5, 5, 5, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 0 10px rgba(43, 89, 195, 0.3);
+  text-shadow: 0 1px 2px rgba(5, 5, 5, 0.5);
+  filter: url(#chrome-blue);
+  animation: fluidShine 3s ease-in-out infinite;
+}
+
+.save-btn:hover {
+  background-position: 100% 100%;
+  box-shadow:
+    0 4px 8px rgba(5, 5, 5, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 0 25px rgba(43, 89, 195, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Steel Reflection chrome button - Cancel */
+.cancel-btn {
+  background: linear-gradient(135deg,
+    #e8eef5 0%,
+    #A8B2BD 20%,
+    #8a9299 40%,
+    #A8B2BD 60%,
+    #d4dbe3 80%,
+    #A8B2BD 100%);
+  background-size: 200% 200%;
+  color: #050505;
+  box-shadow:
+    0 2px 4px rgba(5, 5, 5, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  filter: url(#chrome-steel);
+  animation: fluidShine 4s ease-in-out infinite 0.5s;
+}
+
+.cancel-btn:hover {
+  background-position: 100% 100%;
+  box-shadow:
+    0 4px 8px rgba(5, 5, 5, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Fluid shine animation */
+@keyframes fluidShine {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Shimmer sweep animation */
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.todo-stats {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(168, 178, 189, 0.15);
+  font-size: 14px;
+}
+
+/* Chrome/Steel - Total */
+.stat-total {
+  background: linear-gradient(135deg, #ffffff 0%, #d4dbe3 25%, #A8B2BD 50%, #d4dbe3 75%, #ffffff 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fluidShine 4s ease-in-out infinite;
+}
+
+/* Prism Blue - Completed */
+.stat-completed {
+  background: linear-gradient(135deg, #7aa3ff 0%, #4a7ae8 25%, #2B59C3 50%, #4a7ae8 75%, #7aa3ff 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fluidShine 3s ease-in-out infinite;
+}
+
+/* Electric Crimson - Remaining */
+.stat-remaining {
+  background: linear-gradient(135deg, #e85a73 0%, #c42a47 25%, #9E1B32 50%, #c42a47 75%, #e85a73 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fluidShine 3.5s ease-in-out infinite reverse;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: rgba(168, 178, 189, 0.6);
+}
+
+.photo-credit {
+  position: fixed;
+  bottom: 10px;
+  right: 15px;
+  font-size: 12px;
+  color: rgba(168, 178, 189, 0.7);
+}
+
+.photo-credit a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+}
+
+.photo-credit a:hover {
+  text-decoration: underline;
+}
